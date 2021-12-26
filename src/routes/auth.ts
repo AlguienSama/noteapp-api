@@ -1,9 +1,9 @@
 import { Router } from 'express';
 import Auth from '../controllers/Auth';
+import { validEmail, validLength } from '../middlewares/validators';
 
 const router = Router();
 
-// TODO: Reemplazo
 router.post('/signin', Auth.signin);
 router.post('/signup', Auth.signup);
 
