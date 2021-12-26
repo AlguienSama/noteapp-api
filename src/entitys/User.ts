@@ -1,6 +1,8 @@
-import { BaseEntity, Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { AfterInsert, BaseEntity, BeforeInsert, Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import * as bcrypt from "bcryptjs"
 import * as jwt from "jsonwebtoken"
+import * as dotenv from "dotenv"
+dotenv.config();
 
 @Entity({name: 'users'})
 export class UserEntity extends BaseEntity {
@@ -34,15 +36,20 @@ export class UserEntity extends BaseEntity {
     }
 
     async setPasswrord(password: string): Promise<void> {
-        const salt = bcrypt.genSaltSync(process.env["SALT_WORK_FACTOR"]);
+        const salt = bcrypt.genSaltSync(parseInt(process.env["SALT_WORK_FACTOR"]));
         const hash = bcrypt.hashSync(password, salt);
         this.password = hash;
     }
 
     async generateJWT(expiresIn?: string | number): Promise<string> {
         if (expiresIn === undefined) {expiresIn = process.env["JWT_EXPIRATION"];}
-        if (!this.id) {return "";}
-        return jwt.sign({user_id: this.id}, process.env["JWT_EXPIRATION"], {expiresIn});
+        if (!this.id) {return;}
+        this.token = jwt.sign({user_id: this.id}, process.env["JWT_ENCRYPTION"], {expiresIn});
+    }
+
+    @BeforeInsert()
+    async registerToken() {
+        if (this.token === undefined) {this.token = 'register';}
     }
 
 }

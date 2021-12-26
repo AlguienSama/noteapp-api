@@ -1,14 +1,22 @@
 import "reflect-metadata";
+import * as dotenv from "dotenv"
 import cors from "cors";
 import Express from "express";
 import routes from './routes'
 import { createConnection } from "typeorm";
 import ormconfig from './ormconfig';
+dotenv.config();
 
 const server = async () => {
-
     
-    await createConnection(ormconfig);
+    await createConnection(ormconfig)
+        .then((con) => {
+            console.log('Connected to DDBB');
+        })
+        .catch((e) => {
+            console.log('Connection DDBB ERROR');
+            console.log(e);
+        })
 
     const app = Express();
 
