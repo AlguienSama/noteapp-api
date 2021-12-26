@@ -5,6 +5,8 @@ export const getUser = async (token: string): Promise<UserEntity> => {
     try {
         const user = await getManager().createQueryBuilder(UserEntity, 'user')
             .where('user.token = :token', {token})
+            .addSelect('user.token')
+            .addSelect('user.created_at')
             .getOneOrFail();
 
         return user;
