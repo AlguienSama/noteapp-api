@@ -1,4 +1,4 @@
-import { AfterInsert, BaseEntity, BeforeInsert, Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { BaseEntity, BeforeInsert, Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import * as bcrypt from "bcryptjs"
 import * as jwt from "jsonwebtoken"
 import * as dotenv from "dotenv"
@@ -7,7 +7,7 @@ dotenv.config();
 @Entity({name: 'users'})
 export class UserEntity extends BaseEntity {
 
-    @PrimaryGeneratedColumn({type: "bigint"})
+    @PrimaryGeneratedColumn("uuid")
     id: bigint;
 
     @Column("varchar", {length: 255, select: false})
