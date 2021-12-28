@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { getManager } from 'typeorm';
 import { UserEntity } from '../entitys/User';
 import response from '../utils/httpResponses';
-import { getUser } from '../utils/querys';
+import { getUserByToken } from '../utils/querys';
 
 class Auth {
     
@@ -20,7 +20,7 @@ class Auth {
             
             if (!await token.comparePassword(password)) { throw 'Invalid Password'; }
 
-            const user = await getUser(token.token);
+            const user = await getUserByToken(token.token);
             if (user === null) { throw 'Invalid Token'; }
 
             response(res, "OK", {user});
@@ -33,7 +33,6 @@ class Auth {
     static signup = async (req: Request, res: Response) => {
         try {
             let { email, nickname, password } = req.body;
-            console.log(req.body);
             
             if (!(email && nickname && password)) { throw 'Invalid Data' }
 
@@ -56,7 +55,6 @@ class Auth {
             
             
         } catch (e) {
-            console.log(e);
             response(res, "BAD_REQUEST");
         }
     }

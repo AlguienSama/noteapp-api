@@ -1,7 +1,8 @@
-import { BaseEntity, BeforeInsert, Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { BaseEntity, BeforeInsert, Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import * as bcrypt from "bcryptjs"
 import * as jwt from "jsonwebtoken"
 import * as dotenv from "dotenv"
+import { NoteEntity } from "./Note";
 dotenv.config();
 
 @Entity({name: 'users'})
@@ -24,6 +25,9 @@ export class UserEntity extends BaseEntity {
 
     @Column("varchar", {length: 255, nullable: true})
     avatar: string;
+
+    @OneToMany(() => NoteEntity, note => note.user)
+    notes: NoteEntity[];
 
     @CreateDateColumn({select: false})
     created_at: Date;

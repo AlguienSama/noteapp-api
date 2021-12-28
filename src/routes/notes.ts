@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import Note from '../controllers/Note';
 const router = Router();
 
 
@@ -9,4 +10,6 @@ const router = Router();
  */
 
 
-router.get('')
+router.post('/', Note.create);
+
+export default router;
