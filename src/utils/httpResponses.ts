@@ -44,9 +44,7 @@ const STATUS = {
 
 }
 
-type STATUS_TYPE = "OK" | "CREATED" | "ACCEPTED" | "NO_CONTENT"
-    | "RESET_CONTENT" | "BAD_REQUEST" | "UNAUTHORIZED" | "PAYMENT_REQUIRED"
-    | "FORBIDDEN" | "NOT_FOUND"
+type STATUS_TYPE = "OK" | "CREATED" | "ACCEPTED" | "NO_CONTENT" | "RESET_CONTENT" | "BAD_REQUEST" | "UNAUTHORIZED" | "PAYMENT_REQUIRED" | "FORBIDDEN" | "NOT_FOUND"
 
 const response = (res: Response, status: STATUS_TYPE, data?: Object) => {
     res.status(STATUS[status].status).json({

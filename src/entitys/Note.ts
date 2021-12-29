@@ -13,7 +13,7 @@ enum ViewFormat {
 export class NoteEntity extends BaseEntity {
 
     @PrimaryGeneratedColumn("uuid")
-    id: bigint;
+    id: string;
 
     @Column("varchar", {length: 255, nullable: true})
     title: string;
