@@ -15,6 +15,12 @@ export const getUserByToken = async (token: string): Promise<UserEntity> => {
         .getOne();
 }
 
+export const userExists = async (email:string): Promise<boolean> => {
+    return await getManager().createQueryBuilder(UserEntity, 'user')
+        .where('user.email = :email', { email })
+        .getCount() === 1;
+}
+
 export const getNotes = async (user: UserEntity): Promise<NoteEntity[]> => {
     return await getManager().createQueryBuilder(NoteEntity, 'note')
             .leftJoinAndSelect('note.user', 'user')

@@ -8,5 +8,6 @@ router.use(validEmail);
 router.use(validLength(4))
 router.post('/signin', Auth.signin);
 router.post('/signup', Auth.signup);
+router.post('/google', Auth.googleAuth);
 
 export default router;

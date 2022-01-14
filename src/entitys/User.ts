@@ -20,7 +20,7 @@ export class UserEntity extends BaseEntity {
     @Column("varchar", {length: 25})
     nickname: string;
 
-    @Column("varchar", {length: 255, select: false})
+    @Column("varchar", {length: 255, select: false, nullable: true})
     password: string;
 
     @Column("varchar", {length: 255, nullable: true})
