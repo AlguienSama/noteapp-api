@@ -20,6 +20,7 @@ class Auth {
             if (password && !await token.comparePassword(password)) { throw 'Invalid Password'; }
 
             const user = await getUserByToken(token.token);
+            user.generateJWT();
             if (user === null) { throw 'Invalid Token'; }
 
             response(res, "OK", {user});
