@@ -9,7 +9,8 @@ const router = Router();
  * DELETE - DELETE
  */
 
-router.get('/:id', Note.get);
+router.get('/', Note.get);
+router.get('/:id', Note.getById);
 router.post('/', Note.create);
 router.patch('/:id', Note.edit);
 router.delete('/:id', Note.delete);

@@ -2,13 +2,23 @@ import { Request, Response } from "express";
 import { getManager } from "typeorm";
 import { NoteEntity } from '../entitys/Note';
 import response from '../utils/httpResponses';
-import { getNote, getUserById } from "../utils/querys";
+import { getNote, getNotes, getUserById } from "../utils/querys";
 import UserRequest from "../utils/UserRequest"
 import VarTypes from '../utils/variableTypes';
 
 class Note {
 
     static get = async (req: UserRequest, res: Response) => {
+        try {
+            const notes = await getNotes(req.user);
+
+            response(res, "OK", {notes});
+        } catch (e) {
+            response(res, "UNAUTHORIZED");
+        }
+    }
+
+    static getById = async (req: UserRequest, res: Response) => {
         const id = req.params.id;
 
         try {
